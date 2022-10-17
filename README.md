@@ -14,7 +14,7 @@ pip install pagarmepy
 Git/Clone
 ```
 git clone https://github.com/robertons/pagarmepy
-cd pagarme
+cd pagarmepy
 pip install -r requirements.txt
 python setup.py install
 ```
@@ -59,12 +59,51 @@ print(objeto.toJSON())
 | 5 | debug | **não** | **False** | Depuração de Request Post, Get, Put, Patch e Delete e Resposta Pagar.ME
 
 ```python
-import pagarme
+import pagarmepy
 
 pagarmepy.PagarMe('idAccount', 'publicKey', 'privateKey', sandbox=True)
 ```
 
 **Mais detalhes em [Documentação Oficial](https://docs.pagar.me/reference/autentica%C3%A7%C3%A3o-2)**
+
+
+## Cliente
+
+### Criar
+
+
+```python
+  cliente = pagarmepy.Customer()
+  cliente.name = 'Fulano Beltrano'
+  cliente.email = 'fulano@email.com'
+  cliente.birthdate = '1980-01-30'
+  cliente.phones = pagarmepy.Phones(**{'mobile_phone': { "country_code": 55, "area_code": 27, "number": 999999999}})
+  cliente.Create()
+
+```
+
+### Obter
+```python
+	cliente = junopy.Customer(id='cus_bjgeDobdLsEO48nw').Get()
+```
+
+### Atualizar
+
+
+```python
+  cliente = junopy.Customer(id='cus_bjgeDobdLsEO48nw').Get()
+  cliente.email = 'fulano2@email.com'
+  cliente.birthdate = '1980-01-30'
+  cliente.phones = pagarmepy.Phones(**{'mobile_phone': { "country_code": 55, "area_code": 27, "number": 999999999}})
+  cliente.Update()
+```
+
+### Listar
+
+```python
+	clientes = pagarmepy.Customer().List({'page':1, 'size':10, 'gender':'female'})
+```
+**Mais detalhes em [Documentação Oficial](https://docs.pagar.me/reference/clientes-1)**
 
 
 ## Suporte Oficial da Pagar.ME

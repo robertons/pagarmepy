@@ -7,6 +7,7 @@ import logging
 import json
 import os
 import io
+from datetime import datetime
 
 DEBUG = False
 SANDBOX = False
@@ -37,7 +38,11 @@ def PagarMe(idAccount, publicKey, privateKey, sandbox=False, debug=False):
     ACCOUNTID = idAccount
     PUBLICKEY = publicKey
     PRIVATEKEY = privateKey
+    if sandbox and not 'test' in PUBLICKEY:
+        raise Exception('Isn`t valid Public Key for Sandbox')
 
+    if sandbox and not 'test' in PRIVATEKEY:
+        raise Exception('Isn`t valid Private Key for Sandbox')
 
 def __headers(data=None, addHeader=None):
     hash = base64.b64encode(f'{PRIVATEKEY}:'.encode("utf-8")).decode("utf-8")
