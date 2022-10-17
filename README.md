@@ -84,14 +84,14 @@ pagarmepy.PagarMe('idAccount', 'publicKey', 'privateKey', sandbox=True)
 
 ### Obter
 ```python
-	cliente = junopy.Customer(id='cus_bjgeDobdLsEO48nw').Get()
+	cliente = pagarmepy.Customer(id='cus_bjgeDobdLsEO48nw').Get()
 ```
 
 ### Atualizar
 
 
 ```python
-  cliente = junopy.Customer(id='cus_bjgeDobdLsEO48nw').Get()
+  cliente = pagarmepy.Customer(id='cus_bjgeDobdLsEO48nw').Get()
   cliente.email = 'fulano2@email.com'
   cliente.birthdate = '1980-01-30'
   cliente.phones = pagarmepy.Phones(**{'mobile_phone': { "country_code": 55, "area_code": 27, "number": 999999999}})
