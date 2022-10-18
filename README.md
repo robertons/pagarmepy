@@ -66,11 +66,9 @@ pagarmepy.PagarMe('idAccount', 'publicKey', 'privateKey', sandbox=True)
 
 **Mais detalhes em [Documentação Oficial](https://docs.pagar.me/reference/autentica%C3%A7%C3%A3o-2)**
 
-
 ## Cliente
 
 ### Criar
-
 
 ```python
   cliente = pagarmepy.Customer()
@@ -91,20 +89,163 @@ pagarmepy.PagarMe('idAccount', 'publicKey', 'privateKey', sandbox=True)
 
 
 ```python
-  cliente = pagarmepy.Customer(id='cus_bjgeDobdLsEO48nw').Get()
-  cliente.email = 'fulano2@email.com'
-  cliente.birthdate = '1980-01-30'
-  cliente.phones = pagarmepy.Phones(**{'mobile_phone': { "country_code": 55, "area_code": 27, "number": 999999999}})
-  cliente.Update()
+  cliente = pagarmepy.Customer(id='cus_bjgeDobsLsEO48nw').Get()
+  cliente.address = pagarmepy.Address(line_1='Rua Capitao Domingos Correa da Rocha, 80, Sala 116', line_2='Ed Master Place, Santa Lucia', city='Vitória', state='ES', country='BR', zip_code='29056220')
+  client.Update()
 ```
 
 ### Listar
 
 ```python
-	clientes = pagarmepy.Customer().List({'page':1, 'size':10, 'gender':'female'})
+  clientes = pagarmepy.Customer().List(filters={'page':1, 'size':10, 'gender':'female'})
 ```
 **Mais detalhes em [Documentação Oficial](https://docs.pagar.me/reference/clientes-1)**
 
+
+
+## Cartões
+
+### Criar
+
+```python
+  card = pagarmepy.Card()
+  card.first_six_digits = "400000"
+  card.last_four_digits = "0010"
+  card.brand = "Mastercard"
+  card.holder_name = "Tony Stark"
+  card.holder_document = "93095135270"
+  card.number = "4000000000000010"
+  card.exp_month = 1
+  card.exp_year = 2030
+  card.cvv = 123
+  card.billing_address = pagarmepy.Address(**{
+    "zip_code": "22000111",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "country": "BR",
+    "line_1": "375, Av. General Osorio, Centro",
+    "line_2": "7º Andar"
+  })
+  card.Create(customer_id='cus_bjgeDobsLsEO48nw')
+
+```
+
+### Obter
+```python
+	card = pagarmepy.Card(id="card_MJYE2GDSLHjjkawL").Get(customer_id="cus_bjgeDobsLsEO48nw")
+```
+
+### Atualizar
+
+```python
+  card = pagarmepy.Card(id="card_MJYE2GDSLHjjkawL").Get(customer_id="cus_bjgeDobsLsEO48nw")
+  card.exp_month = 2
+  card.exp_year = 2035
+  card.billing_address = pagarmepy.Address(**{'line_1':'Rua Capitao Domingos Correa da Rocha, 80, Sala 116', 'line_2':'Ed Master Place, Santa Lucia', 'city':'Vitória', 'state':'ES', 'country':'BR', 'zip_code':'29056220'})
+  card.Update(customer_id="cus_bjgeDobsLsEO48nw")
+  print(card.toJSON())
+```
+
+### Listar
+
+```python
+  cards = pagarmepy.Card().List(customer_id='cus_bjgeDobsLsEO48nw')
+```
+
+### Excluir
+
+```python
+  pagarmepy.Card(id="card_MJYE2GDSLHjjkawL").Delete(customer_id="cus_bjgeDobsLsEO48nw")
+```
+
+### Renovar
+
+```python
+  card = pagarmepy.Card(id="card_G4QnR6ck7cgBn8XR").Renew(customer_id="cus_bjgeDobsLsEO48nw")
+```
+
+
+### Criar Token
+
+```python
+  token = pagarmepy.Token()
+  token.type = "card"
+  token.card = pagarmepy.Card(
+      first_six_digits = "400000",
+      last_four_digits = "0010",
+      brand = "Mastercard",
+      holder_name = "Tony Stark",
+      holder_document = "93095135270",
+      number = "4000000000000010",
+      exp_month = 1,
+      exp_year = 2030,
+      cvv = 123,
+      billing_address = pagarmepy.Address(**{
+        "zip_code": "22000111",
+        "city": "Rio de Janeiro",
+        "state": "RJ",
+        "country": "BR",
+        "line_1": "375, Av. General Osorio, Centro",
+        "line_2": "7º Andar"
+      })
+  )
+
+  token.Create(appId='pk_test_Y479412hrHMQ956j')
+```
+
+**Mais detalhes em [Documentação Oficial](https://docs.pagar.me/reference/cart%C3%B5es-1)**
+
+## Endereços
+
+### Criar
+
+```python
+  address = pagarmepy.Address(**{
+    "zip_code": "22000111",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "country": "BR",
+    "line_1": "375, Av. General Osorio, Centro",
+    "line_2": "7º Andar"
+  })
+  address.Create(customer_id='cus_bjgeDobsLsEO48nw')
+
+```
+
+### Obter
+```python
+	card = pagarmepy.Address(id="addr_lOAgNqH1wCxD6eYd").Get(customer_id="cus_bjgeDobsLsEO48nw")
+```
+
+### Atualizar
+
+```python
+  address = pagarmepy.Address(id="addr_BNwDJk2TPTmXGArR").Get(customer_id="cus_bjgeDobsLsEO48nw")
+  address.line_2 = 'Master Place, Itararé'
+  address.Update(customer_id='cus_bjgeDobsLsEO48nw')
+```
+
+### Listar
+
+```python
+  addresses = pagarmepy.Address().List(customer_id='cus_bjgeDobsLsEO48nw')
+```
+
+### Excluir
+
+```python
+  pagarmepy.Address(id="addr_lOAgNqH1wCxD6eYd").Delete(customer_id="cus_bjgeDobsLsEO48nw")
+```
+
+## BIN
+
+Os seis primeiros dígitos de um número de cartão (incluindo o dígito MII inicial) são conhecidos como o número de identificação do emissor (IIN) ou número de identificação do banco (BIN). Estes números identificam a instituição que emitiu o cartão ao titular do cartão. O restante do número é alocado pelo emissor. Para obter as informações do Emissor:
+
+### Obter
+
+```python
+  bin = pagarmepy.BIN().Get(bin='555566')
+```
 
 ## Suporte Oficial da Pagar.ME
 

@@ -3,8 +3,9 @@
 from .datatype import *
 from pagarmepy.utils.pagarme import *
 from datetime import datetime
+import re
 
-__methods__ = ['toJSON', 'load', 'add', 'Create', 'Update', 'Get', 'List',
+__methods__ = ['toJSON', 'FormatRoute', 'Renew', 'load', 'add', 'Create', 'Update', 'Get', 'List',
                'Delete', 'Deactivate', 'Reactivate', 'Cancel', 'Complete', 'SendFiles']
 
 
@@ -88,8 +89,12 @@ class PagarMeEntity():
                     if hasattr(value, '__context__') and not value.__context__:
                         value.__context__ = self
                     self[item].value = value
-                    self.__metadata__['data'][item] = EncodeValue(
-                        self[item].value, self[item].format)
+                    self.__metadata__['data'][item] = EncodeValue(self[item].value, self[item].format)
+
+                    if 'type' in self[item].__dict__ and self[item].__dict__ ['type']:
+                        if not 'list' in self[item].__class__.__name__:
+                            self[item].__dict__['context'].__metadata__['relasionships'][item] = EncodeValue(self[item].value, self[item].format)
+
                     if self.__context__:
                         _context = self.__context__['entity']
                         _context_key = self.__context__['key']
@@ -100,6 +105,8 @@ class PagarMeEntity():
                         else:
                             _context.__metadata__[
                                 'relasionships'][_context_key] = self.__metadata__['data']
+
+
                 else:
                     super().__setattr__(item, value)
             else:
@@ -113,71 +120,73 @@ class PagarMeEntity():
         except Exception as e:
             raise e
 
-    def Create(self, resourceToken=None):
+    def FormatRoute(self, put_id=False, **kw):
+        _header = None
+        _route = self.__route__
+
+        if 'resourceToken' in kw:
+            _header = {'resourceToken' :kw['resourceToken']}
+
+        result = re.search(r"\{(\w+)\}", _route)
+        if result:
+            for param in result.groups():
+                if not param in kw:
+                    raise Exception(f"Param ({param}) is required on method Create")
+            _route = _route.format(**kw)
+
+        if put_id and hasattr(self, '__requireid__') and self.__requireid__:
+            if self.id is None:
+                raise Exception("ID object required")
+            else:
+                _route = f"{_route}/{self.id}"
+
+        return _header, _route
+
+    def Create(self, **kw):
         if hasattr(self, '__route__'):
-            addHeader = None
-            if resourceToken:
-                addHeader = {'resourceToken':resourceToken}
-            data = Post(self.__route__, self.toJSON(), addHeader)
+            addHeader, route = self.FormatRoute(**kw)
+            data = Post(route, self.toJSON(), addHeader)
             self.load(**data)
         else:
             raise Exception("Method Create not allowed this object")
         return self
 
-    def Update(self):
+    def Update(self, **kw):
         if hasattr(self, '__route__'):
-            route = self.__route__
-            if hasattr(self, '__requireid__'):
-                if self.__requireid__ == True and self.id is None:
-                    raise Exception("ID object required")
-                if self.id is not None and self.__requireid__ == True:
-                    route = f"{route}/{self.id}"
-                    self.id = None
-            data = Put(route, self.toJSON())
+            addHeader, route = self.FormatRoute(True, **kw)
+            data = Put(route, self.toJSON(), addHeader)
             self.load(**data)
         else:
             raise Exception("Method Update not allowed this object")
         return self
 
-    def Get(self):
+    def Get(self, **kw):
         if hasattr(self, '__route__'):
-            route = self.__route__
-            if hasattr(self, '__requireid__'):
-                if self.__requireid__ == True and self.id is None:
-                    raise Exception("ID object required")
-                route = f"{route}/{self.id}"
-            addHeader = None
-            if hasattr(self, 'resourceToken') and self.resourceToken:
-                addHeader = {'resourceToken':resourceToken}
+            addHeader, route = self.FormatRoute(True, **kw)
             response = Get(route, addHeader)
-
             self.load(**response)
         else:
             raise Exception("Method Get not allowed this object")
         return self
 
-    def List(self, params=None):
+    def List(self, filters=None, **kw):
         if hasattr(self, '__route__'):
-            if params:
-                qs = '?' + '&'.join([f'{k}={v}' for k,v in params.items()])
-            else:
-                qs =''
-            route = f"{self.__route__}{qs}"
-            response = Get(route, None)
+            addHeader, route = self.FormatRoute(**kw)
+            qs =''
+            if filters:
+                qs = '?' + '&'.join([f'{k}={v}' for k,v in filters.items()])
+            route = f"{route}{qs}"
+            response = Get(route, addHeader)
             _class = getattr(__import__(f'{self.__module__}', fromlist=[self.__class__.__name__]), self.__class__.__name__)
             return ListType(_class).add([_class(**item) for item in response['data']]) if 'data' in response else ListType(_class)
         else:
             raise Exception("Method Get not allowed this object")
         return self
 
-    def Delete(self):
+    def Delete(self, **kw):
         if hasattr(self, '__route__'):
-            route = self.__route__
-            if hasattr(self, '__requireid__') and self.__requireid__ == True:
-                if self.id is None:
-                    raise Exception("ID object required")
-                route = f"{route}/{self.id}"
-            Delete(route)
+            addHeader, route = self.FormatRoute(True, **kw)
+            Delete(route, addHeader)
         else:
             raise Exception("Method Delete not allowed this object")
         self = None

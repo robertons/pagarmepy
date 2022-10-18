@@ -63,26 +63,26 @@ def __Route(url):
 
 
 def Get(url, data={}, addHeader=None):
-    return __ValidateResponse(requests.get(__Route(url), params=data, headers=__headers(data, addHeader)))
+    return ValidateResponse(requests.get(__Route(url), params=data, headers=__headers(data, addHeader)))
 
 
 def Post(url, data, addHeader=None):
-    return __ValidateResponse(requests.post(__Route(url), json=data, headers=__headers(data, addHeader)))
+    return ValidateResponse(requests.post(__Route(url), json=data, headers=__headers(data, addHeader)))
 
 
 def Put(url, data, addHeader=None):
-    return __ValidateResponse(requests.put(__Route(url), json=data, headers=__headers(data, addHeader)))
+    return ValidateResponse(requests.put(__Route(url), json=data, headers=__headers(data, addHeader)))
 
 
 def Patch(url, data, addHeader=None):
     post_data = dict(data)
     if 'resourceToken' in post_data:
         del post_data['resourceToken']
-    return __ValidateResponse(requests.patch(__Route(url), json=post_data, headers=__headers(data, addHeader)))
+    return ValidateResponse(requests.patch(__Route(url), json=post_data, headers=__headers(data, addHeader)))
 
 
 def Delete(url, addHeader=None):
-    return __ValidateResponse(requests.delete(__Route(url), headers=__headers(None, addHeader)))
+    return ValidateResponse(requests.delete(__Route(url), headers=__headers(None, addHeader)))
 
 
 def UploadMultiPart(url, files, data=None, addHeader=None):
@@ -93,7 +93,7 @@ def UploadMultiPart(url, files, data=None, addHeader=None):
         elif isinstance(file, tuple) and isinstance(file[0], str) and (isinstance(file[1], bytes) or isinstance(file[1], io.BufferedReader)):
             f.append(('files', (file[0], file[1])))
     m = MultipartEncoder(fields=f)
-    return __ValidateResponse(requests.post(__Route(url), data=m, headers=__headers(data, {'Content-Type': m.content_type})))
+    return ValidateResponse(requests.post(__Route(url), data=m, headers=__headers(data, {'Content-Type': m.content_type})))
 
 
 class PagarMeException(Exception):
@@ -101,7 +101,7 @@ class PagarMeException(Exception):
         self.message = message
         self.detail = detail
 
-def __ValidateResponse(response):
+def ValidateResponse(response):
 
     if response.status_code == 200:
         try:
