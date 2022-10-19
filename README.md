@@ -214,7 +214,7 @@ pagarmepy.PagarMe('idAccount', 'publicKey', 'privateKey', sandbox=True)
 
 ### Obter
 ```python
-	card = pagarmepy.Address(id="addr_lOAgNqH1wCxD6eYd").Get(customer_id="cus_bjgeDobsLsEO48nw")
+  address = pagarmepy.Address(id="addr_lOAgNqH1wCxD6eYd").Get(customer_id="cus_bjgeDobsLsEO48nw")
 ```
 
 ### Atualizar

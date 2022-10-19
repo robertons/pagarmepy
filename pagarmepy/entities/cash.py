@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from .lib import *
 
-class Voucher(PagarMeEntity):
+class Cash(PagarMeEntity):
 
 	def __init__(cls, **kw):
 

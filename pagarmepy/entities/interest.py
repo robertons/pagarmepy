@@ -9,7 +9,7 @@ class Interest(PagarMeEntity):
 
 		# FIELDS
 		cls.days = Int()
-        cls.type = String(max=20)
-        cls.amount = Int()
+		cls.type = String(max=20)
+		cls.amount = Int()
 
 		super().__init__(**kw)

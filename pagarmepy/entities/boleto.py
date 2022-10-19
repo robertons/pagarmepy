@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from .lib import *
 
-class Pix(PagarMeEntity):
+class Boleto(PagarMeEntity):
 
 	def __init__(cls, **kw):
 
