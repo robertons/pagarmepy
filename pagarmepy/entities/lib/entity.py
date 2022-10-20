@@ -6,7 +6,7 @@ from datetime import datetime
 import re
 
 __methods__ = ['toJSON', 'FormatRoute', 'Renew', 'load', 'add', 'Create', 'Update', 'Get', 'List',
-               'Delete', 'Deactivate', 'Reactivate', 'Cancel', 'Complete', 'SendFiles']
+               'Delete', 'Deactivate', 'Reactivate', 'Cancel', 'Complete', 'Close', 'SendFiles']
 
 
 def EncodeValue(o, format=None):
@@ -45,7 +45,7 @@ class PagarMeEntity():
                                 self.__metadata__['data'][k] = EncodeValue(
                                     self[k].value, self[k].format)
                 except Exception as e:
-                    raise Exception(f"Field [{k}] Value [{kw[k]}] Error : {e}")
+                    raise Exception(f"[{self.__class__.__name__}] Field [{k}] Value [{kw[k]}] Error : {e}")
 
     def add(self, key=None, data=None):
         if key and (isinstance(data, dict) or isinstance(data, list)):
@@ -71,7 +71,7 @@ class PagarMeEntity():
         elif hasattr(data, '__class__') and data.__class__.__name__ == self[key].type.__name__:
             self.__setattr__(key, data)
         else:
-            raise Exception("entity.add requires key and dict of object data")
+            raise Exception(f"[{self.__class__.__name__}] entity.add requires key and dict of object data")
 
     def __getitem__(self, field):
         return super().__getattribute__(field) if hasattr(self, field) else None
@@ -112,7 +112,7 @@ class PagarMeEntity():
             else:
                 super().__setattr__(item, value)
         except Exception as e:
-            raise Exception(f"Field [{item}] Value [{value}] Error : {e}")
+            raise Exception(f"[{self.__class__.__name__}] Field [{item}] Value [{value}] Error : {e}")
 
     def toJSON(self):
         try:
@@ -131,12 +131,12 @@ class PagarMeEntity():
         if result:
             for param in result.groups():
                 if not param in kw:
-                    raise Exception(f"Param ({param}) is required on method Create")
+                    raise Exception(f"[{self.__class__.__name__}] Param ({param}) is required on method")
             _route = _route.format(**kw)
 
         if put_id and hasattr(self, '__requireid__') and self.__requireid__:
             if self.id is None:
-                raise Exception("ID object required")
+                raise Exception(f"[{self.__class__.__name__}] ID object required")
             else:
                 _route = f"{_route}/{self.id}"
 
@@ -148,7 +148,7 @@ class PagarMeEntity():
             data = Post(route, self.toJSON(), addHeader)
             self.load(**data)
         else:
-            raise Exception("Method Create not allowed this object")
+            raise Exception(f"[{self.__class__.__name__}] Method Create not allowed this object")
         return self
 
     def Update(self, **kw):
@@ -157,7 +157,7 @@ class PagarMeEntity():
             data = Put(route, self.toJSON(), addHeader)
             self.load(**data)
         else:
-            raise Exception("Method Update not allowed this object")
+            raise Exception(f"[{self.__class__.__name__}] Method Update not allowed this object")
         return self
 
     def Get(self, **kw):
@@ -166,7 +166,7 @@ class PagarMeEntity():
             response = Get(route, addHeader)
             self.load(**response)
         else:
-            raise Exception("Method Get not allowed this object")
+            raise Exception(f"[{self.__class__.__name__}] Method Get not allowed this object")
         return self
 
     def List(self, filters=None, **kw):
@@ -180,7 +180,7 @@ class PagarMeEntity():
             _class = getattr(__import__(f'{self.__module__}', fromlist=[self.__class__.__name__]), self.__class__.__name__)
             return ListType(_class).add([_class(**item) for item in response['data']]) if 'data' in response else ListType(_class)
         else:
-            raise Exception("Method Get not allowed this object")
+            raise Exception(f"[{self.__class__.__name__}] Method Get not allowed this object")
         return self
 
     def Delete(self, **kw):
@@ -188,6 +188,6 @@ class PagarMeEntity():
             addHeader, route = self.FormatRoute(True, **kw)
             Delete(route, addHeader)
         else:
-            raise Exception("Method Delete not allowed this object")
+            raise Exception(f"[{self.__class__.__name__}] Method Delete not allowed this object")
         self = None
         return None

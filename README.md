@@ -247,6 +247,91 @@ Os seis primeiros dígitos de um número de cartão (incluindo o dígito MII ini
   bin = pagarmepy.BIN().Get(bin='555566')
 ```
 
+## PEDIDOS
+
+Veja a documentação oficial para pedidos com pagamentos multimeios, pedidos com multicompradores.
+
+**Mais detalhes em [Documentação Oficial](https://docs.pagar.me/reference/pedidos-1)**
+
+
+### Criar
+
+Exemplo Pedido com Checkout:
+
+```python
+  pedido = pagarmepy.Order()
+  pedido.customer_id = "cus_bjgeDobsLsEO48nw"
+  pedido.code =  "62LVFN7I4R"
+  pedido.amount = 2900
+  pedido.currency =  "BRL"
+  pedido.items.add(pagarmepy.Item(**{
+          "id": "oi_d478RMAS3bC74PrL",
+          "description": "Chaveiro do Tesseract",
+          "amount": 2900,
+          "quantity": 1,
+          "status": "active",
+          "code":"abc"
+      }))
+
+  pedido.shipping = pagarmepy.Shipping(**{
+      "amount": 100,
+      "description": "Stark",
+      "recipient_name": "Tony Stark",
+      "recipient_phone": "24586787867",
+      "address": {
+          "line_1": "10880, Malibu Point, Malibu Central",
+          "zip_code": "90265",
+          "city": "Malibu",
+          "state": "CA",
+          "country": "US"
+      }})
+
+  pedido.payments.add(pagarmepy.Payment(**{
+       "amount" : 3000,
+       "payment_method":"checkout",
+       "checkout": {
+          "expires_in":120,
+          "billing_address_editable" : False,
+          "customer_editable" : False,
+          "accepted_payment_methods": ["credit_card"],
+          "success_url": "https://www.pagar.me",
+       }
+       }))
+
+  pedido.Create()
+```
+
+### Obter
+```python
+  pedido = pagarmepy.Order(id="or_jP82N8VUpXhyYr4b").Get()
+```
+
+### Listar
+
+```python
+  pedidos = pagarmepy.Order().List(customer_id='cus_bjgeDobsLsEO48nw')
+```
+
+
+```python
+  pedidos = pagarmepy.Order().List()
+```
+
+### Fechar um Pedido
+
+```python
+  pedido = pagarmepy.Order(id="or_jP82N8VUpXhyYr4b").Close()
+```
+
+### Excluir
+
+```python
+  pagarmepy.Address(id="addr_lOAgNqH1wCxD6eYd").Delete(customer_id="cus_bjgeDobsLsEO48nw")
+```
+
+## COBRANÇAS
+
+
 ## Suporte Oficial da Pagar.ME
 
 Em caso de dúvidas, problemas ou sugestões:  [relacionamento@pagar.me](mailto:relacionamento@pagar.me)

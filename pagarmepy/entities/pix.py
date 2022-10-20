@@ -10,6 +10,6 @@ class Pix(PagarMeEntity):
 		# FIELDS
 		cls.expires_in = Int()
 		cls.expires_at = DateTime(format="%Y-%m-%dT%H:%M:%S")
-		cls.additional_information = ObjList(context=cls, key='additional_information', name='Dict')
+		cls.additional_information = ObjList(context=cls, key='additional_information', name='dict')
 
 		super().__init__(**kw)

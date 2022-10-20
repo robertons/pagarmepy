@@ -12,6 +12,7 @@ class Charge(PagarMeEntity):
 		cls.code = String(max=25)
 		cls.gateway_id = String(max=25)
 		cls.amount = Int()
+		cls.currency =  String(max=25)
 		cls.payment_method = String(max=25)
 		cls.status = String(max=25)
 		cls.due_at = DateTime(format="%Y-%m-%dT%H:%M:%S")

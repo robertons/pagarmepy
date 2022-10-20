@@ -12,6 +12,6 @@ class Antifraud(PagarMeEntity):
 		cls.return_code = String(max=100)
 		cls.status = String(max=100)
 		cls.return_message = String(max=256)
-		cls.score = Int()
+		cls.score = String(max=256)
 
 		super().__init__(**kw)

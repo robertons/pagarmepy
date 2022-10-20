@@ -75,11 +75,7 @@ def Put(url, data, addHeader=None):
 
 
 def Patch(url, data, addHeader=None):
-    post_data = dict(data)
-    if 'resourceToken' in post_data:
-        del post_data['resourceToken']
-    return ValidateResponse(requests.patch(__Route(url), json=post_data, headers=__headers(data, addHeader)))
-
+    return ValidateResponse(requests.patch(__Route(url), json=data, headers=__headers(data, addHeader)))
 
 def Delete(url, addHeader=None):
     return ValidateResponse(requests.delete(__Route(url), headers=__headers(None, addHeader)))

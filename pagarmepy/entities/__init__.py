@@ -21,8 +21,10 @@ from .device import Device
 from .fine import Fine
 
 from .interest import Interest
+from .installment import Installment
 from .invoice import Invoice
 from .item import Item
+
 
 from .location import Location
 
@@ -39,4 +41,6 @@ from .submerchant import SubMerchant
 
 from .token import Token
 from .threedsecure import ThreedSecure
+from .transaction import Transaction
+
 from .voucher import Voucher

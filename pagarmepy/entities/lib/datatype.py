@@ -17,6 +17,8 @@ class ValidateValue:
                 self.type = str
             elif name == 'int':
                 self.type = int
+            elif name == 'dict':
+                self.type = dict
             else:
                 self.type = getattr(__import__(
                     f'pagarmepy.entities.{name.lower()}', fromlist=[name]), name)

@@ -8,7 +8,7 @@ class CreditCard(PagarMeEntity):
 		cls.__metadata__ = {}
 
 		# FIELDS
-		cls.installments = Int()
+		cls.installments = ObjList(context=cls, key='installments', name='Installment')
 		cls.statement_descriptor = String(max=13)
 		cls.operation_type = String(max=20)
 		cls.card = Obj(context=cls, key='card', name='Card')
