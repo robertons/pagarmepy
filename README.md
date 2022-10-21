@@ -331,6 +331,96 @@ Exemplo Pedido com Checkout:
 
 ## COBRANÇAS
 
+### Obter
+```python
+  cobranca = pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").Get()
+```
+
+### Capturar Valor Integral
+
+```python
+  cobranca = pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").Capture()
+```
+
+### Capturar Valor Parcial
+
+```python
+  cobranca = pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").Capture(amount=10)
+```
+
+### Editar cartão de cobrança
+
+```python
+  cobranca = pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").ChangeCard(
+  pagarmepy.Card(
+        first_six_digits = "400000",
+        last_four_digits = "0010",
+        brand = "Mastercard",
+        holder_name = "Tony Stark",
+        holder_document = "93095135270",
+        number = "4000000000000010",
+        exp_month = 1,
+        exp_year = 2030,
+        cvv = 123,
+        billing_address = pagarmepy.Address(**{
+          "zip_code": "22000111",
+          "city": "Rio de Janeiro",
+          "state": "RJ",
+          "country": "BR",
+          "line_1": "375, Av. General Osorio, Centro",
+          "line_2": "7º Andar"
+        })
+    )
+  )
+```
+
+### Editar data de vencimento da cobrança
+
+```python
+  cobranca = pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").ChangeDueDate('2022-10-21')
+```
+
+
+### Editar método de pagamento
+
+```python
+  cobranca = pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").ChangePaymentMethod(pagarmepy.Payment(**{
+         "amount" : 3000,
+         "payment_method":"boleto",
+         "boleto": {
+            "instructions": "Instrução de boleto de teste",
+            "due_at" : "2022-10-20T14:30:22",
+            "document_number" : "123456",
+            "type": "DM"
+         }
+    }))
+```
+
+### Cancelar Cobrança
+
+```python
+  cobranca = pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").Delete()
+```
+
+### Listar
+
+```python
+  cobrancas = pagarmepy.Charge().List()
+```
+
+### Retentar uma cobrança manualmente
+
+```python
+  cobranca =  pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").Retry()
+```
+
+
+### Confirmar cobrança (cash)
+
+```python
+  cobranca = pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").Confirm()
+```
+
 
 ## Suporte Oficial da Pagar.ME
 

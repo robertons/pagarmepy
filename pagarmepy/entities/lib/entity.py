@@ -6,7 +6,8 @@ from datetime import datetime
 import re
 
 __methods__ = ['toJSON', 'FormatRoute', 'Renew', 'load', 'add', 'Create', 'Update', 'Get', 'List',
-               'Delete', 'Deactivate', 'Reactivate', 'Cancel', 'Complete', 'Close', 'SendFiles']
+               'Delete', 'Reactivate', 'Close', 'Capture', 'Confirm', 'Retry', 'ChangePaymentMethod',
+               'ChangeDueDate', 'ChangeCard']
 
 
 def EncodeValue(o, format=None):
