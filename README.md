@@ -428,6 +428,70 @@ Exemplo Pedido com Checkout:
   cobranca = pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").Confirm()
 ```
 
+# RECORRÊNCIA
+
+**Mais detalhes em [Documentação Oficial](https://docs.pagar.me/reference/vis%C3%A3o-geral-da-recorr%C3%AAncia)**
+
+## PLANOS
+
+### Criar
+
+```python
+plano = pagarmepy.Plan()
+  plano.name = "Plano Mensal Teste"
+  plano.description = "Plano de teste de integração API"
+  plano.shippable = False
+  plano.payment_methods.add('credit_card')
+  plano.statement_descriptor = 'Assinatura'
+  plano.currency = 'BRL'
+  plano.interval = 'month'
+  plano.interval_count = 1
+  plano.billing_type = 'prepaid'
+  plano.quantity = 1
+  plano.pricing_scheme = pagarmepy.PricingScheme(**{
+          "scheme_type": "unit",
+          "price": 5000,
+          "minimum_price": 5000,
+      })
+  plano.Create()
+```
+
+### Obter
+
+```python
+  plano = pagarmepy.Plan(id="plan_ODjw15Af9WUgzwkg").Get()
+```
+
+### Listar
+
+```python
+  plano = pagarmepy.Plan().List()
+```
+
+### Excluir
+
+```python
+  pagarmepy.Plan(id="plan_ODjw15Af9WUgzwkg").Delete()
+```
+
+### Atualizar
+
+```python
+  plano = pagarmepy.Plan(id="plan_ODjw15Af9WUgzwkg").Get()
+  plano.statement_descriptor = "AST Test"
+  plano.Update()
+```
+
+### Modificar Metadata
+
+```python
+plano = pagarmepy.Plan(id="plan_VR92ne8UEUGWNMAa").ChangeMetadata(
+      campo1 = 'valor 1',
+      campo2 = 'valor 2',
+      camponumero = 3
+  )
+```
+
 ## Suporte Oficial da Pagar.ME
 
 Em caso de dúvidas, problemas ou sugestões:  [relacionamento@pagar.me](mailto:relacionamento@pagar.me)

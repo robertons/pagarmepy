@@ -35,6 +35,9 @@ from .period import Period
 from .pix import Pix
 from .phone import Phone
 from .phones import Phones
+from .plan import Plan
+from .pricingscheme import PricingScheme
+from .pricebracket import PriceBracket
 
 from .shipping import Shipping
 from .submerchant import SubMerchant

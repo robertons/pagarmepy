@@ -214,7 +214,7 @@ class ListType(list):
             else:
                 super(ListType, self).append(item)
                 if (self._context):
-                    self._context.__metadata__['relasionships'][self._key].append(item.toJSON())
+                    self._context.__metadata__['relasionships'][self._key].append(item.toJSON() if hasattr('toJSON', item) else item)
 
         except Exception as e:
             raise e
