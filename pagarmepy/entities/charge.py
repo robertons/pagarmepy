@@ -42,31 +42,31 @@ class Charge(PagarMeEntity):
 		return self
 
 	def ChangeCard(self, creditcard:CreditCard):
-		addHeader, route = self.FormatRoute(True, {})
-		response = Patch(f"{route}/card", creditcard.toJSON(), addHeader)
+		addHeader, route = self.FormatRoute(True, **{})
+		response = Patch(f"{route}/card", {'card': creditcard.toJSON()}, addHeader)
 		self.load(**response)
 		return self
 
 	def ChangeDueDate(self, due_at:str):
-		addHeader, route = self.FormatRoute(True, {})
+		addHeader, route = self.FormatRoute(True, **{})
 		response = Patch(f"{route}/due-date", {'due_at': due_at}, addHeader)
 		self.load(**response)
 		return self
 
 	def ChangePaymentMethod(self, payment:Payment):
-		addHeader, route = self.FormatRoute(True, {})
+		addHeader, route = self.FormatRoute(True, **{})
 		response = Patch(f"{route}/payment-method", payment.toJSON(), addHeader)
 		self.load(**response)
 		return self
 
 	def Retry(self):
-		addHeader, route = self.FormatRoute(True, {})
+		addHeader, route = self.FormatRoute(True, **{})
 		response = Post(f"{route}/retry", {}, addHeader)
 		self.load(**response)
 		return self
 
 	def Confirm(self):
-		addHeader, route = self.FormatRoute(True, {})
+		addHeader, route = self.FormatRoute(True, **{})
 		response = Post(f"{route}/confirm-payment", {}, addHeader)
 		self.load(**response)
 		return self

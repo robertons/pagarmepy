@@ -351,27 +351,24 @@ Exemplo Pedido com Checkout:
 ### Editar cartão de cobrança
 
 ```python
-  cobranca = pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").ChangeCard(
-  pagarmepy.Card(
-        first_six_digits = "400000",
-        last_four_digits = "0010",
-        brand = "Mastercard",
-        holder_name = "Tony Stark",
-        holder_document = "93095135270",
-        number = "4000000000000010",
-        exp_month = 1,
-        exp_year = 2030,
-        cvv = 123,
-        billing_address = pagarmepy.Address(**{
-          "zip_code": "22000111",
-          "city": "Rio de Janeiro",
-          "state": "RJ",
-          "country": "BR",
-          "line_1": "375, Av. General Osorio, Centro",
-          "line_2": "7º Andar"
-        })
-    )
-  )
+  cobranca = pagarmepy.Charge(id="ch_Pr5R4D5izhEbyNQY").ChangeCard(pagarmepy.Card(
+      first_six_digits = "400000",
+      last_four_digits = "0010",
+      brand = "Mastercard",
+      holder_name = "Tony Stark",
+      holder_document = "93095135270",
+      number = "4000000000000010",
+      exp_month = 1,
+      exp_year = 2030,
+      cvv = 123,
+      billing_address = pagarmepy.Address(**{
+        "zip_code": "22000111",
+        "city": "Rio de Janeiro",
+        "state": "RJ",
+        "country": "BR",
+        "line_1": "375, Av. General Osorio, Centro",
+        "line_2": "7º Andar"
+      })))
 ```
 
 ### Editar data de vencimento da cobrança
@@ -394,6 +391,16 @@ Exemplo Pedido com Checkout:
             "type": "DM"
          }
     }))
+```
+
+```python
+ cobranca = pagarmepy.Charge(id="ch_Pr5R4D5izhEbyNQY").ChangePaymentMethod(pagarmepy.Payment(**{
+       "amount" : 3000,
+       "payment_method":"credit_card",
+       "credit_card": {
+          'card_id': "card_G4QnR6ck7cgBn8XR",
+       }
+  }))
 ```
 
 ### Cancelar Cobrança
@@ -420,7 +427,6 @@ Exemplo Pedido com Checkout:
 ```python
   cobranca = pagarmepy.Charge(id="ch_Rz8oL2vcjwc3D1OQ").Confirm()
 ```
-
 
 ## Suporte Oficial da Pagar.ME
 
