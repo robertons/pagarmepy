@@ -5,7 +5,9 @@ class Increment(PagarMeEntity):
 
 	def __init__(cls, **kw):
 
+		cls.__route__ = '/subscriptions/{subscription_id}/increments'
 		cls.__metadata__ = {}
+		cls.__requireid__ = True
 
 		# FIELDS
 		cls.id = String(max=40)

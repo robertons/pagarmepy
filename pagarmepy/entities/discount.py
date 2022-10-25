@@ -5,7 +5,9 @@ class Discount(PagarMeEntity):
 
 	def __init__(cls, **kw):
 
+		cls.__route__ = '/subscriptions/{subscription_id}/discounts'
 		cls.__metadata__ = {}
+		cls.__requireid__ = True
 
 		# FIELDS
 		cls.id = String(max=40)

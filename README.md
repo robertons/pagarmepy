@@ -737,6 +737,8 @@ ou
   pagarmepy.Subscription(id="sub_brJdw1jTlTa89zyQ").DeleteItem("oi_d478RMAS3bC74PrL")
 ```
 
+## Uso de Items de Assinatura
+
 ### Incluir Uso
 
 ```python
@@ -757,6 +759,67 @@ ou
 ```python
   usos = pagarmepy.Usage().List(subscription_id="sub_1VRDB5AfWfjBnZpx", item_id="si_QjGb0BZUkUD0Eyag")
 ```
+
+
+## Descontos
+
+### Incluir
+
+```python
+  desconto = pagarmepy.Discount()
+  desconto.uso.value = 100
+  desconto.increment_type = 'flat'
+  desconto.Create(subscription_id="sub_brJdw1jTlTa89zyQ")
+```
+
+### Obter
+
+```python
+  desconto = pagarmepy.Discount(id="dis_2VBDB53fWfjgnZpX").Get(subscription_id="sub_brJdw1jTlTa89zyQ")
+```
+
+### Remover
+
+```python
+  pagarmepy.Discount(id="dis_2VBDB53fWfjgnZpX").Delete(subscription_id="sub_brJdw1jTlTa89zyQ")
+```
+
+### Listar
+
+```python
+  descontos = pagarmepy.Discount().List(subscription_id="sub_brJdw1jTlTa89zyQ")
+```
+
+
+## Incremento
+
+### Incluir
+
+```python
+  incremento = pagarmepy.Increment()
+  desconto.uso.value = 100
+  desconto.increment_type = 'flat'
+  desconto.Create(subscription_id="sub_brJdw1jTlTa89zyQ")
+```
+
+### Obter
+
+```python
+  incremento = pagarmepy.Increment(id="inc_2VBDB53fWfjgnZpX").Get(subscription_id="sub_brJdw1jTlTa89zyQ")
+```
+
+### Remover
+
+```python
+  pagarmepy.Increment(id="inc_2VBDB53fWfjgnZpX").Delete(subscription_id="sub_brJdw1jTlTa89zyQ")
+```
+
+### Listar
+
+```python
+  incrementos = pagarmepy.Increment().List(subscription_id="sub_brJdw1jTlTa89zyQ")
+```
+
 
 ## Suporte Oficial da Pagar.ME
 
