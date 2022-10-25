@@ -31,8 +31,10 @@ class Order(PagarMeEntity):
 		cls.session_id =  String(max=120)
 		cls.antifraud_enabled = Boolean()
 		cls.SubMerchant = Obj(context=cls, key='SubMerchant', name='SubMerchant')
+		cls.split = ObjList(context=cls, key='split', name='Split')
 		cls.Recurrence = Boolean()
 		cls.metadata = Dict()
+
 
 		super().__init__(**kw)
 

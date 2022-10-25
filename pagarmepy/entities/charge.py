@@ -37,6 +37,8 @@ class Charge(PagarMeEntity):
 			data['amount'] = kw['amount']
 		if 'code' in kw:
 			data['code'] = kw['code']
+		if 'split' in kw:
+			data['split'] = kw['split']
 		response = Post(f"{route}/capture", data, addHeader)
 		self.load(**response)
 		return self

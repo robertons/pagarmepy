@@ -14,12 +14,15 @@ from .charge import Charge
 from .checkout import Checkout
 from .creditcard import CreditCard
 from .customer import Customer
+from .cycle import Cycle
 
 from .debitcard import DebitCard
 from .device import Device
+from .discount import Discount
 
 from .fine import Fine
 
+from .increment import Increment
 from .interest import Interest
 from .installment import Installment
 from .invoice import Invoice
@@ -28,7 +31,10 @@ from .item import Item
 
 from .location import Location
 
+
+from .option import Option
 from .order import Order
+
 
 from .payment import Payment
 from .period import Period
@@ -39,11 +45,16 @@ from .plan import Plan
 from .pricingscheme import PricingScheme
 from .pricebracket import PriceBracket
 
+from .setup import Setup
+from .split import Split
 from .shipping import Shipping
 from .submerchant import SubMerchant
+from .subscription import Subscription
 
 from .token import Token
 from .threedsecure import ThreedSecure
 from .transaction import Transaction
+
+from .usage import Usage
 
 from .voucher import Voucher

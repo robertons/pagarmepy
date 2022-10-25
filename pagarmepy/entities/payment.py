@@ -10,6 +10,7 @@ class Payment(PagarMeEntity):
 		# FIELDS
 		cls.payment_method = String(max=20)
 		cls.credit_card = Obj(context=cls, key='credit_card', name='CreditCard')
+		cls.card_id = String(max=26)
 		cls.debit_card = Obj(context=cls, key='debit_card', name='DebitCard')
 		cls.voucher = Obj(context=cls, key='voucher', name='Voucher')
 		cls.boleto = Obj(context=cls, key='boleto', name='Boleto')

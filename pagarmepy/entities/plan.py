@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from .lib import *
+from pagarmepy.entities.item import Item
+
 
 class Plan(PagarMeEntity):
 
@@ -40,3 +42,18 @@ class Plan(PagarMeEntity):
 		response = Patch(f"{route}/metadata", {'metadata': kw}, addHeader)
 		self.load(**response)
 		return self
+
+	def AddItem(self, item:Item):
+		addHeader, route = self.FormatRoute(True, **{})
+		response = Post(f"{route}/items", item.toJSON(), addHeader)
+		return Item(**response)
+
+	def UpdateItem(self, item:Item):
+		addHeader, route = self.FormatRoute(True, **{})
+		response = Put(f"{route}/items/{item.id}", item.toJSON(), addHeader)
+		return Item(**response)
+
+	def DeleteItem(self, item_id:String):
+		addHeader, route = self.FormatRoute(True, **{})
+		response = Delete(f"{route}/items/{item_id}", addHeader)
+		return None

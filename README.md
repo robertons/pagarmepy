@@ -102,7 +102,6 @@ pagarmepy.PagarMe('idAccount', 'publicKey', 'privateKey', sandbox=True)
 **Mais detalhes em [Documentação Oficial](https://docs.pagar.me/reference/clientes-1)**
 
 
-
 ## Cartões
 
 ### Criar
@@ -490,6 +489,273 @@ plano = pagarmepy.Plan(id="plan_VR92ne8UEUGWNMAa").ChangeMetadata(
       campo2 = 'valor 2',
       camponumero = 3
   )
+```
+
+
+## Items do Plano
+
+### Adicionar Item
+
+```python
+  items_planos = pagarmepy.Plan(id="plan_brJdw1jTlTa89zyQ").AddItem(pagarmepy.Item(**{
+          "description": "Chaveiro do Alternativo",
+          "quantity": 1,
+          "pricing_scheme": {
+              "price": 2000,
+              "scheme_type": "unit"
+          }
+      }))
+```
+
+### Atualizar Item
+
+```python
+  items_planos = pagarmepy.Plan(id="plan_brJdw1jTlTa89zyQ").UpdateItem(pagarmepy.Item(**{
+          "id": "pi_d478RMAS3bC74PrL",
+          "description": "Chaveiro do Tesseract Antigo",
+          "status": "active",
+          "quantity": 1,
+          "pricing_scheme": {
+              "price": 3000,
+              "scheme_type": "unit"
+          }
+      }))
+```
+
+### Excluir Item
+
+```python
+  pagarmepy.Plan(id="plan_brJdw1jTlTa89zyQ").DeleteItem("pi_d478RMAS3bC74PrL")
+```
+
+## ASSINATURAS
+
+### Criar Assinatura Avulsa
+
+```python
+  assinatura = pagarmepy.Subscription()
+  assinatura.code = '1234'
+  assinatura.customer_id = "cus_bjgeDobsLsEO48nw"
+  assinatura.interval = 'month'
+  assinatura.interval_count = 1
+  assinatura.currency = 'BRL'
+  assinatura.payment_method = "credit_card"
+  assinatura.billing_type = 'prepaid'
+  assinatura.installments = 1
+  assinatura.statement_descriptor = "AST Gofans"
+  assinatura.items.add(pagarmepy.Item(**{
+          "id": "oi_d478RMAS3bC74PrL",
+          "description": "Chaveiro do Tesseract",
+          "amount": 2900,
+          "quantity": 1,
+          "status": "active",
+          "code":"abc",
+          "pricing_scheme":{
+              "scheme_type": "Unit",
+              "price": 2900
+          }
+      }))
+  assinatura.card = pagarmepy.Card(**{
+      "number": "4000000000000010",
+      "holder_name": "Tony Stark",
+      "exp_month": 1,
+      "exp_year": 30,
+      "cvv": "3531",
+      "billing_address": {
+          "line_1": "10880, Malibu Point, Malibu Central",
+          "zip_code": "90265",
+          "city": "Malibu",
+          "state": "CA",
+          "country": "US"
+      }
+  })
+
+  assinatura.Create()
+```
+
+### Criar Assinatura de um Plano
+
+```python
+  assinatura = pagarmepy.Subscription()
+  assinatura.code = '1234'
+  assinatura.customer_id = "cus_bjgeDobsLsEO48nw"
+  assinatura.plan_id = "plan_VR92ne8UEUGWNMAa"
+  assinatura.interval = 'month'
+  assinatura.interval_count = 1
+  assinatura.currency = 'BRL'
+  assinatura.payment_method = "credit_card"
+  assinatura.billing_type = 'prepaid'
+  assinatura.installments = 1
+  assinatura.statement_descriptor = "AST Gofans"    
+  assinatura.card = pagarmepy.Card(**{
+      "number": "4000000000000010",
+      "holder_name": "Tony Stark",
+      "exp_month": 1,
+      "exp_year": 30,
+      "cvv": "3531",
+      "billing_address": {
+          "line_1": "10880, Malibu Point, Malibu Central",
+          "zip_code": "90265",
+          "city": "Malibu",
+          "state": "CA",
+          "country": "US"
+      }
+  })
+
+  assinatura.Create()
+```
+
+### Obter
+
+```python
+  assinaturas = pagarmepy.Subscription(id="sub_9ZVy143Hd1HODql1").Get()
+```
+
+### Listar
+
+```python
+  assinaturas = pagarmepy.Subscription().List()
+```
+
+### Cancelar
+
+```python
+  assinaturas = pagarmepy.Subscription(id="sub_9ZVy143Hd1HODql1").Delete()
+```
+
+
+### Editar cartão da assinatura
+
+```python
+  assinatura = pagarmepy.Subscription(id="sub_Gdg4m3BTrqTyoK01").ChangePaymentMethod(pagarmepy.Payment(**{
+       "payment_method":"credit_card",
+       'card_id': "card_G4QnR6ck7cgBn8XR",
+  }))
+```
+
+### Editar metadados da assinatura
+
+```python
+  assinatura = pagarmepy.Subscription(id="sub_9ZVy143Hd1HODql1").ChangeMetadata(
+      campo1 = 'valor 1',
+      campo2 = 'valor 2',
+      camponumero = 3
+  )
+```
+
+### Editar meio de pagamento da assinatura
+
+```python
+  assinatura = pagarmepy.Subscription(id="sub_9ZVy143Hd1HODql1").ChangePaymentMethod(pagarmepy.Payment(**{
+         "payment_method":"boleto",
+         "boleto": {
+            "instructions": "Instrução de boleto de teste",
+            "due_at" : "2022-10-20T14:30:22",
+            "document_number" : "123456",
+            "type": "DM"
+         }
+    }))
+```
+ou
+
+```python
+ assinatura = pagarmepy.Subscription(id="sub_9ZVy143Hd1HODql1").ChangePaymentMethod(pagarmepy.Payment(**{
+       "payment_method":"credit_card",
+       "credit_card": {
+          'card_id': "card_G4QnR6ck7cgBn8XR",
+       }
+  }))
+```
+
+### Editar data de início da assinatura
+
+```python
+  assinatura = pagarmepy.Subscription(id="sub_9ZVy143Hd1HODql1").ChangeStarteDate('2022-10-21')
+```
+
+
+### Editar preço mínimo da assinatura
+
+```python
+  assinatura = pagarmepy.Subscription(id="sub_9ZVy143Hd1HODql1").ChangeMinimumPrice(10000)
+```
+
+
+### Ativar faturamento manual
+
+```python
+  assinatura = pagarmepy.Subscription(id="sub_9ZVy143Hd1HODql1").SetManualBilling(True)
+```
+
+
+### Desativar faturamento manual
+
+```python
+  assinatura = pagarmepy.Subscription(id="sub_9ZVy143Hd1HODql1").SetManualBilling(False)
+```
+
+
+## Items de Assinatura
+
+### Adicionar Item
+
+```python
+  items_asssinaturas = pagarmepy.Subscription(id="sub_brJdw1jTlTa89zyQ").AddItem(pagarmepy.Item(**{
+          "description": "Chaveiro do Alternativo",
+          "quantity": 1,
+          "pricing_scheme": {
+              "price": 2000,
+              "scheme_type": "unit"
+          }
+      }))
+```
+
+### Atualizar Item
+
+```python
+  items_asssinaturas = pagarmepy.Subscription(id="sub_brJdw1jTlTa89zyQ").UpdateItem(pagarmepy.Item(**{
+          "id": "oi_d478RMAS3bC74PrL",
+          "description": "Chaveiro do Tesseract Antigo",
+          "status": "active",
+          "quantity": 1,
+          "pricing_scheme": {
+              "price": 3000,
+              "scheme_type": "unit"
+          }
+      }))
+```
+
+### Listar Items
+
+```python
+  items_asssinaturas = pagarmepy.Subscription(id="sub_brJdw1jTlTa89zyQ").ListItems()
+```
+
+### Excluir Item
+
+```python
+  pagarmepy.Subscription(id="sub_brJdw1jTlTa89zyQ").DeleteItem("oi_d478RMAS3bC74PrL")
+```
+
+### Incluir Uso
+
+```python
+  uso = pagarmepy.Usage()
+  uso.quantity = 1
+  uso.description = "Uso de teste"
+  uso.Create(subscription_id="sub_brJdw1jTlTa89zyQ", item_id="si_Ww2DP2eHzHnolqbn")
+```
+
+### Remover Uso
+
+```python
+  pagarmepy.Usage(id="usage_2VBDB53fWfjgnZpX").Delete(subscription_id="sub_1VRDB5AfWfjBnZpx", item_id="si_QjGb0BZUkUD0Eyag")
+```
+
+### Listar Uso
+
+```python
+  usos = pagarmepy.Usage().List(subscription_id="sub_1VRDB5AfWfjBnZpx", item_id="si_QjGb0BZUkUD0Eyag")
 ```
 
 ## Suporte Oficial da Pagar.ME
