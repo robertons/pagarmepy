@@ -831,16 +831,50 @@ ou
 ### Obter
 
 ```python
-  cycles = pagarmepy.Cycle(id="cycle_VWk4gY6TMPHN7A0g").Get(subscription_id="sub_9ZVy143Hd1HODql1")
+  ciclos = pagarmepy.Cycle(id="cycle_VWk4gY6TMPHN7A0g").Get(subscription_id="sub_9ZVy143Hd1HODql1")
 ```
 
 ### Listar
 
 ```python
-  cycles = pagarmepy.Cycle().List(subscription_id="sub_9ZVy143Hd1HODql1")
+  ciclos = pagarmepy.Cycle().List(subscription_id="sub_9ZVy143Hd1HODql1")
 ```
 
+## Faturas
 
+### Criar
+
+```python
+  fatura = pagarmepy.Invoice().Create(subscription_id='sub_brJdw1jTlTa89zyQ', cycle_id='cycle_v0dxrO3i2iyr5J9X')
+```
+
+### Obter
+
+```python
+  fatura = pagarmepy.Invoice(id="in_VWk4gY6TMPHN7A0g").Get()
+```
+
+### Listar
+
+```python
+  fatura = pagarmepy.Invoice().List()
+```
+
+### Modificar Metadata
+
+```python
+  fatura = pagarmepy.Invoice(id="in_VWk4gY6TMPHN7A0g").ChangeMetadata(
+      campo1 = 'valor 1',
+      campo2 = 'valor 2',
+      camponumero = 3
+  )
+```
+
+### Cancelar Fatura
+
+```python
+  fatura = pagarmepy.Invoice(id="in_VWk4gY6TMPHN7A0g").Delete()
+```
 
 ## Suporte Oficial da Pagar.ME
 

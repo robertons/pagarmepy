@@ -5,7 +5,9 @@ class Invoice(PagarMeEntity):
 
 	def __init__(cls, **kw):
 
+		cls.__route__ = '/invoices'
 		cls.__metadata__ = {}
+		cls.__requireid__ = True
 
 		# FIELDS
 		cls.id = String(max=25)
@@ -28,3 +30,18 @@ class Invoice(PagarMeEntity):
 		cls.total_increment = Int()
 
 		super().__init__(**kw)
+
+	def Create(self, **kw):
+		if not 'subscription_id' in kw:
+			raise Exception(f"Param (subscription_id) is required on method Create")
+		if not 'cycle_id' in kw:
+			raise Exception(f"Param (cycle_id) is required on method Create")
+		data = Post(f"/subscriptions/{kw['subscription_id']}/cycles/{kw['cycle_id']}/pay", self.toJSON(), None)
+		self.load(**data)
+		return self
+
+	def ChangeMetadata(self, **kw):
+		addHeader, route = self.FormatRoute(True, **{})
+		response = Patch(f"{route}/metadata", {'metadata': kw}, addHeader)
+		self.load(**response)
+		return self
