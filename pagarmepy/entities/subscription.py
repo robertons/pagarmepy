@@ -65,6 +65,12 @@ class Subscription(PagarMeEntity):
 		self.load(**response)
 		return self
 
+	def ChangeSplitRule(self, enabled:bool):
+		addHeader, route = self.FormatRoute(True, **{})
+		response = Patch(f"{route}/split", {'enabled': enabled, 'rules': self.split}, addHeader)
+		self.load(**response)
+		return self
+
 	def ChangeStarteDate(self, start_at:str):
 		addHeader, route = self.FormatRoute(True, **{})
 		response = Patch(f"{route}/start-at", {'start_at': start_at}, addHeader)

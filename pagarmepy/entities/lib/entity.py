@@ -8,7 +8,7 @@ import re
 __methods__ = ['toJSON', 'FormatRoute', 'Renew', 'load', 'add', 'Create', 'Update', 'Get', 'List',
                'Delete', 'Reactivate', 'Close', 'Capture', 'Confirm', 'Retry', 'ChangePaymentMethod',
                'ChangeDueDate', 'ChangeStarteDate', 'ChangeMinimumPrice', 'SetManualBilling', 'ChangeCard',
-               'AddItem', 'UpdateItem', 'DeleteItem', 'ListItems', 'ChangeMetadata']
+               'ChangeSplitRule', 'AddItem', 'UpdateItem', 'DeleteItem', 'ListItems', 'ChangeMetadata']
 
 
 def EncodeValue(o, format=None):

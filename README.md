@@ -820,6 +820,40 @@ ou
   incrementos = pagarmepy.Increment().List(subscription_id="sub_brJdw1jTlTa89zyQ")
 ```
 
+
+## Modificar Regras Split
+
+
+```python
+  assinatura = pagarmepy.Subscription()
+  assinatura.id = "sub_brJdw1jTlTa89zyQ"
+  assinatura.split.add(pagarmepy.Split(**{
+                "amount": 50,
+                "recipient_id": "rp_n9voQ2QT0SQrMwOL",
+                "type": "percentage",
+                "options": {
+                    "charge_processing_fee": True,
+                    "charge_remainder_fee": True,
+                    "liable": True
+                }
+            }))
+
+  assinatura.split.add(pagarmepy.Split(**{
+                "amount": 50,
+                "type": "percentage",
+                "recipient_id": "rp_6gyn5oIvAcwjrNej",
+                "options": {
+                    "charge_processing_fee": False,
+                    "charge_remainder_fee": False,
+                    "liable": False
+                }
+            }))
+
+  assinatura.ChangeSplitRule(enabled=True)
+```
+
+
+
 ## Ciclos
 
 ### Renovar Ciclo
