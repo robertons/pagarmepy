@@ -820,6 +820,27 @@ ou
   incrementos = pagarmepy.Increment().List(subscription_id="sub_brJdw1jTlTa89zyQ")
 ```
 
+## Ciclos
+
+### Renovar Ciclo
+
+```python
+  ciclo = pagarmepy.Cycle(id="cycle_brJdw1jTlTa89zyQ").Renew()
+```
+
+### Obter
+
+```python
+  cycles = pagarmepy.Cycle(id="cycle_VWk4gY6TMPHN7A0g").Get(subscription_id="sub_9ZVy143Hd1HODql1")
+```
+
+### Listar
+
+```python
+  cycles = pagarmepy.Cycle().List(subscription_id="sub_9ZVy143Hd1HODql1")
+```
+
+
 
 ## Suporte Oficial da Pagar.ME
 
