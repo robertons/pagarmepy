@@ -163,7 +163,6 @@ pagarmepy.PagarMe('idAccount', 'publicKey', 'privateKey', sandbox=True)
   card = pagarmepy.Card(id="card_G4QnR6ck7cgBn8XR").Renew(customer_id="cus_bjgeDobsLsEO48nw")
 ```
 
-
 ### Criar Token
 
 ```python
@@ -908,6 +907,104 @@ ou
 
 ```python
   fatura = pagarmepy.Invoice(id="in_VWk4gY6TMPHN7A0g").Delete()
+```
+
+
+## Recebedores
+
+### Criar
+
+```python
+  recebedor = pagarmepy.Recipient()
+  recebedor.name = 'Joao da Silva'
+  recebedor.email = "joaodasilva@gmail.com"
+  recebedor.document = '000011233000'
+  recebedor.description = 'Recebedor teste de cadastro'
+  recebedor.type = 'individual'
+  recebedor.default_bank_account = pagarmepy.BankAccount(**{
+      "holder_name": "Joao da Silva",
+      "holder_type": "individual",
+      "holder_document": '000011233000',
+      "bank": "033",
+      "type": "checking",
+      "branch_number": "4444",
+      "branch_check_digit": "0",
+      "account_number": "11223344",
+      "account_check_digit": "5",
+  })
+  recebedor.Create()
+  print(recebedor.toJSON())
+```
+
+### Obter
+
+```python
+  recebedor = pagarmepy.Recipient(id="rp_JPx17b8H9HgwY5zo").Get()
+```
+
+### Atualizar
+
+```python
+  recebedor = pagarmepy.Recipient(id="rp_WGAn6Q4SySWZBlRy").Get()
+  recebedor.description = "Descrição Alterada de Recebedor"
+  recebedor.Update()
+```
+
+### Listar
+
+```python
+  recebedores = pagarmepy.Recipient().List()
+```
+
+### Saldo
+
+```python
+  saldo = pagarmepy.Recipient(id="rp_JPx17b8H9HgwY5zo").GetBalance()
+```
+
+### Alterar Conta Bancária Padrão
+
+```python
+  recebedor = pagarmepy.Recipient(id="rp_JPx17b8H9HgwY5zo").ChangeDefaultBankAccount(pagarmepy.BankAccount(**{
+      "holder_name": "Roberto Neves da Silva",
+      "holder_type": "individual",
+      "holder_document": '09292800752',
+      "bank": "033",
+      "type": "checking",
+      "branch_number": "4316",
+      "branch_check_digit": "0",
+      "account_number": "01001647",
+      "account_check_digit": "3",
+  }))  
+```
+### Alterar Configurações de Transferência
+
+```python
+  recebedor = pagarmepy.Recipient(id="rp_WGAn6Q4SySWZBlRy").ChangeTransferSettings(transfer_enabled=True, transfer_interval="monthly", transfer_day="1")
+```
+
+### Alterar Configurações de Antecipação de Recebíveis
+
+```python
+  pagarmepy.Recipient(id="rp_WGAn6Q4SySWZBlRy").ChangeAnticipationSettings(enabled=True, type="full", volume_percentage="100", days=["1","2"], delay="1")
+```
+
+### Criar Saque
+
+```python
+saque = pagarmepy.Recipient(id="rp_WGAn6Q4SySWZBlRy").DoWithdraw(100)
+```
+
+### Obter Saque
+
+```python
+saque = pagarmepy.Recipient(id="rp_WGAn6Q4SySWZBlRy").GetWithdraw("with_LR4Wxpqt68ul2W9M")
+```
+
+### Listar Saques
+
+```python
+  saques = pagarmepy.Recipient(id="rp_WGAn6Q4SySWZBlRy").ListWithdrawals()
 ```
 
 ## Suporte Oficial da Pagar.ME
