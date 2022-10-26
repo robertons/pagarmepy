@@ -8,6 +8,7 @@ import json
 import os
 import io
 from datetime import datetime
+from decimal import Decimal
 
 DEBUG = False
 SANDBOX = False
@@ -127,3 +128,12 @@ def ValidateResponse(response):
                 ]
             }
         raise PagarMeException("Pagar.me Request Error", response_json)
+
+def DecimalToCents(value) -> int:
+    return int(value*100)
+
+def CentsToDecimal(value) -> Decimal:
+    return Decimal(Decimal(value)/Decimal(100))
+
+def CentsToFloat(value) -> float:
+    return float(float(value)/float(100))

@@ -49,6 +49,25 @@ objeto = Objeto(...)
 print(objeto.toJSON())
 ```
 
+##  Operações em Centavos
+
+Todos os campos referente a valores operacionais Pagar.Me são em centavos as funções abaixo facilitam a conversão e reversão em caso dos Webhooks para utilização dos valores em outros formatos.
+
+### Qualquer valor em Float ou Decimal para Centavos Inteiro
+```python
+  valor_centavos_int = pagarmepy.DecimalToCents(valor)
+```
+
+### Qualquer Inteiro em centavos para Float
+```python
+  valor_float = pagarmepy.CentsToFloat(valor)
+```
+
+### Qualquer Inteiro em centavos para Decimal (decimal.Decimal)
+```python
+  valor_decimal = pagarmepy.CentsToDecimal(valor)
+```
+
 ## Configuração Inicial
 |posição  | campo |  obrigatório | padrão | descrição |
 |--|--|--|--|--|
