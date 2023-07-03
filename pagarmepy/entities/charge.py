@@ -13,9 +13,11 @@ class Charge(PagarMeEntity):
 
 		# FIELDS
 		cls.id = String(max=25)
-		cls.code = String(max=25)
+		cls.code = String(max=55)
 		cls.gateway_id = String(max=25)
 		cls.amount = Int()
+		cls.paid_amount = Int()
+		cls.paid_at = DateTime(format="%Y-%m-%dT%H:%M:%S")
 		cls.currency =  String(max=25)
 		cls.payment_method = String(max=25)
 		cls.status = String(max=25)
@@ -25,6 +27,7 @@ class Charge(PagarMeEntity):
 		cls.customer = Obj(context=cls, key='customer', name='Customer')
 		cls.invoice = Obj(context=cls, key='invoice', name='Invoice')
 		cls.last_transaction = Obj(context=cls, key='last_transaction', name='Transaction')
+		cls.order = Obj(context=cls, key='order', name='Order')
 		cls.metadata = Dict()
 
 

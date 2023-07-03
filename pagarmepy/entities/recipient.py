@@ -44,7 +44,7 @@ class Recipient(PagarMeEntity):
 	def DoWithdraw(self, amount:int):
 		addHeader, route = self.FormatRoute(True, **{})
 		response = Post(f"{route}/withdrawals", {'amount': amount}, addHeader)
-		return Balance(**response)
+		return Withdraw(**response)
 
 	def GetWithdraw(self, withdraw_id:str):
 		addHeader, route = self.FormatRoute(True, **{})

@@ -35,6 +35,7 @@ class Transaction(PagarMeEntity):
         cls.acquirer_auth_code = Int()
         cls.acquirer_message = String(max=256)
         cls.acquirer_return_code = String(max=256)
+        cls.operation_key = String(max=256)
         cls.operation_type = String(max=256)
         cls.card = Obj(context=cls, key='card', name='Card')
         cls.created_at = DateTime(format="%Y-%m-%dT%H:%M:%S")

@@ -9,6 +9,8 @@ class Period(PagarMeEntity):
 
 		# FIELDS
 		cls.id = String(max=25)
+		cls.start_at = DateTime(format="%Y-%m-%dT%H:%M:%S")
+		cls.end_at = DateTime(format="%Y-%m-%dT%H:%M:%S")
 
 
 		super().__init__(**kw)

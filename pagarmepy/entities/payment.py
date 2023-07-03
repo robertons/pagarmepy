@@ -18,6 +18,7 @@ class Payment(PagarMeEntity):
 		cls.checkout = Obj(context=cls, key='checkout', name='Checkout')
 		cls.cash = Obj(context=cls, key='cash', name='Cash')
 		cls.pix = Obj(context=cls, key='pix', name='Pix')
+		cls.split = ObjList(context=cls, key='split', name='Split')
 		cls.amount = Int()
 		cls.metadata = Dict()
 		cls.gateway_affiliation_id = String(max=256)

@@ -31,6 +31,7 @@ class Subscription(PagarMeEntity):
 		cls.plan_id  = String(max=26)
 		cls.plan = Obj(context=cls, key='plan', name='Plan')
 		cls.card = Obj(context=cls, key='card', name='Card')
+		cls.card_id  = String(max=56)
 		cls.discounts = ObjList(context=cls, key='discounts', name='Discount')
 		cls.increments = ObjList(context=cls, key='increments', name='Increment')
 		cls.setup = Obj(context=cls, key='setup', name='Setup')
@@ -42,7 +43,7 @@ class Subscription(PagarMeEntity):
 		cls.canceled_at = DateTime(format="%Y-%m-%dT%H:%M:%S")
 		cls.metadata = Dict()
 		cls.gateway_affiliation_id = String(max=156)
-		cls.split = ObjList(context=cls, key='split', name='Split')
+		cls.split = Obj(context=cls, key='split', name='Splitsubscription')
 		cls.current_cycle = Obj(context=cls, key='current_cycle', name='Cycle')
 
 		super().__init__(**kw)

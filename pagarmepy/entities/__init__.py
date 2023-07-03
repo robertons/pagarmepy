@@ -53,6 +53,7 @@ from .recipient import Recipient
 
 from .setup import Setup
 from .split import Split
+from .splitsubscription import Splitsubscription
 from .shipping import Shipping
 from .submerchant import SubMerchant
 from .subscription import Subscription
